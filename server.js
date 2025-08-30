@@ -14,7 +14,23 @@ const settingsRoutes = require("./routes/settingsRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",    // Local development frontend
+  "https://juddfront.vercel.app", // Your deployed frontend URL
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+  credentials: true, // Allow cookies and authentication credentials to be sent
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB connection
@@ -44,29 +60,6 @@ app.use((error, req, res, next) => {
   res.status(500).json({ message: "Internal server error" });
 });
 
-async function initializeSampleData() {
-  try {
-    const User = require("./models/User");
-    const Court = require("./models/Court");
-    const Staff = require("./models/Staff");
-
-    const userCount = await User.countDocuments();
-    if (userCount > 0) {
-      console.log("ℹ️ Sample data already exists, skipping seeding.");
-      return;
-    }
-
-    console.log("🌱 Seeding sample data...");
-    const users = await User.create([
-      { username: "admin", password: "admin123", role: "admin", name: "System Administrator" },
-    ]);
-
-
-    console.log("✅ Sample data seeding completed.");
-  } catch (error) {
-    console.error("❌ Error initializing sample data:", error);
-  }
-}
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
