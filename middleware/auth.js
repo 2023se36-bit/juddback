@@ -15,10 +15,10 @@ const authenticateToken = async (req, res, next) => {
     }
 
     // Verify token
-    const secret = process.env.JWT_SECRET;
+    //const secret = process.env.JWT_SECRET;
     let decoded;
     try {
-      decoded = jwt.verify(token, secret);
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
       if (err.name === "TokenExpiredError") {
         return res.status(401).json({
