@@ -26,7 +26,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Specify allowed methods
   credentials: true, // Allow cookies and authentication credentials to be sent
 };
 
@@ -49,8 +49,6 @@ mongoose
 app.get("/", (req, res) => {
   res.send("Welcome to the API");
 });
-
-
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/courts", courtRoutes);
@@ -67,3 +65,6 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+
+// Export the handler for Vercel
+module.exports = app;
