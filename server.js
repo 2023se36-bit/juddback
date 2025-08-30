@@ -15,17 +15,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 // Middleware
 const allowedOrigins = [
-  "http://localhost:3000",    // Local development frontend
   "https://juddfront.vercel.app", // Your deployed frontend URL
 ];
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Specify allowed methods
   credentials: true, // Allow cookies and authentication credentials to be sent
 };
