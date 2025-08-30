@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const Court = require("../models/Court");
 const Staff = require("../models/Staff");
-const RecycleBin = require("../models/Recyclebin");
+const RecycleBin = require("../models/RecycleBin");
 
 
 

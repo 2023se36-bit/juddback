@@ -1,7 +1,7 @@
 //staff controller
 const Staff = require("../models/Staff");
 const Court = require("../models/Court");
-const RecycleBin = require("../models/Recyclebin");
+const RecycleBin = require("../models/RecycleBin");
 const mongoose = require("mongoose");
 
 // --- Get all staff ---
