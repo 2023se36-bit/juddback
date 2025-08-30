@@ -34,13 +34,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI
-
+const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
   .connect(MONGODB_URI)
   .then(async () => {
     console.log("✅ Connected to MongoDB");
-    await initializeSampleData();
   })
   .catch((error) => {
     console.error("❌ MongoDB connection error:", error);
